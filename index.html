@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEET ME 2026 · La Hinchada de ECOTEC</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#002366;--blue:#0057A8;--cel:#29ABE2;--ice:#E6F4FB;
+  --white:#fff;--gold:#FFC72C;--red:#C0392B;--green:#1A7A4A;--purple:#6C3483;--orange:#E67E22
+}
+body{
+  font-family:'Nunito',sans-serif;
+  min-height:100vh;
+  background:var(--navy);
+  background-image:
+    repeating-linear-gradient(90deg,transparent,transparent 48px,rgba(255,255,255,.04) 48px,rgba(255,255,255,.04) 96px);
+  padding-bottom:3rem
+}
+
+/* HEADER */
+.hdr{text-align:center;padding:2.5rem 1rem 1rem}
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold);color:var(--navy);
+  font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;
+  padding:5px 18px;border-radius:30px;margin-bottom:.8rem
+}
+.hdr-title{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,5vw,2.8rem);font-weight:700;color:#fff;line-height:1.05}
+.hdr-title em{color:var(--cel);font-style:normal}
+.hdr-sub{color:rgba(255,255,255,.55);font-size:.85rem;font-weight:600;margin-top:.4rem}
+
+/* FORM CARD */
+.fc{
+  background:#fff;border-radius:22px;
+  padding:2rem;max-width:500px;margin:1.5rem auto;
+  box-shadow:0 24px 64px rgba(0,0,0,.35)
+}
+.fc-title{
+  font-family:'Oswald',sans-serif;font-size:1.1rem;
+  color:var(--navy);text-align:center;margin-bottom:1.6rem;font-weight:600
+}
+
+/* GENDER TOGGLE */
+.gtog{display:flex;background:var(--ice);border-radius:14px;padding:4px;margin-bottom:1.6rem;gap:4px}
+.gbtn{
+  flex:1;padding:11px;border:none;background:transparent;border-radius:10px;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;
+  color:#999;transition:all .2s
+}
+.gbtn.on{background:var(--blue);color:#fff}
+
+/* DIMENSIONS */
+.dim{margin-bottom:1.6rem}
+.dim-hd{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--navy);margin-bottom:.25rem;font-size:.9rem}
+.dim-ic{
+  width:30px;height:30px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0
+}
+.dim-hint{font-size:.73rem;color:#aaa;margin-bottom:.55rem}
+.score-row{display:flex;align-items:center;gap:12px}
+input[type=range]{
+  flex:1;-webkit-appearance:none;height:5px;border-radius:3px;
+  background:var(--ice);outline:none;cursor:pointer
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:var(--blue);cursor:pointer;border:3px solid #fff;
+  box-shadow:0 2px 8px rgba(0,87,168,.3)
+}
+.sval{
+  font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;
+  color:var(--blue);min-width:38px;text-align:center
+}
+.srange{font-size:.68rem;color:#bbb;text-align:right;margin-top:3px}
+
+/* BUTTON */
+.btn-go{
+  width:100%;padding:17px;
+  background:linear-gradient(135deg,var(--blue),var(--cel));
+  color:#fff;border:none;border-radius:16px;
+  font-family:'Oswald',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:1px;
+  cursor:pointer;margin-top:.5rem;transition:transform .2s,box-shadow .2s
+}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(41,171,226,.45)}
+
+/* RESULT */
+.rc{
+  display:none;max-width:500px;margin:1.5rem auto;
+  border-radius:24px;overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,.4);
+  animation:sup .55s cubic-bezier(.23,1,.32,1)
+}
+@keyframes sup{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+.rc-hdr{padding:2.5rem 1.5rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+.rc-hdr::after{
+  content:'';position:absolute;bottom:-30px;right:-30px;
+  width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12)
+}
+.rc-hdr::before{
+  content:'';position:absolute;top:-20px;left:-20px;
+  width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.08)
+}
+.rc-emoji{font-size:3.5rem;display:block;margin-bottom:.6rem;position:relative;z-index:1}
+.rc-tag{
+  display:inline-block;background:rgba(255,255,255,.22);color:#fff;
+  font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:3px;
+  padding:4px 14px;border-radius:20px;margin-bottom:.5rem;position:relative;z-index:1
+}
+.rc-name{
+  font-family:'Oswald',sans-serif;font-size:1.9rem;font-weight:700;
+  color:#fff;line-height:1;position:relative;z-index:1
+}
+.rc-body{background:#fff;padding:1.6rem 1.8rem 2rem}
+.rc-desc{color:#333;line-height:1.65;margin-bottom:1.1rem;font-weight:600;font-size:.93rem}
+.rc-pills{display:flex;gap:8px;margin-bottom:1.2rem}
+.pill{
+  flex:1;background:var(--ice);border-radius:12px;
+  padding:10px 6px;text-align:center
+}
+.pill .pl{font-size:.62rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.pill .pv{font-family:'Oswald',sans-serif;font-size:1.35rem;font-weight:700;color:var(--navy)}
+.pill .pc{font-size:.65rem;font-weight:700;margin-top:1px}
+.rc-tip{
+  border-radius:12px;padding:13px 15px;
+  font-size:.84rem;color:var(--navy);font-weight:600;line-height:1.5;
+  border-left:4px solid var(--cel);background:var(--ice)
+}
+.rc-tip strong{color:var(--blue)}
+.btn-back{
+  display:block;margin:1rem 1.5rem 1.5rem;padding:12px;
+  background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);
+  border-radius:12px;color:#fff;font-family:'Nunito',sans-serif;font-weight:700;
+  cursor:pointer;font-size:.9rem;transition:background .2s;text-align:center
+}
+.btn-back:hover{background:rgba(255,255,255,.22)}
+
+/* FOOTER */
+.ftr{text-align:center;padding:1rem;color:rgba(255,255,255,.25);font-size:.72rem;font-weight:700;letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-badge">⚽ MEET ME 2026</div>
+  <div class="hdr-title">LA HINCHADA<br>DE <em>ECOTEC</em></div>
+  <div class="hdr-sub">Descubre tu perfil de inteligencia emocional</div>
+</div>
+
+<div class="fc" id="formCard">
+  <div class="fc-title">Ingresa tus puntuaciones del TMMS-24</div>
+
+  <div class="gtog">
+    <button class="gbtn on" onclick="setG('H',this)">🙋‍♂️ Hombre</button>
+    <button class="gbtn" onclick="setG('M',this)">🙋‍♀️ Mujer</button>
+  </div>
+
+  <div class="dim">
+    <div class="dim-hd">
+      <div class="dim-ic" style="background:#EEF2FF">👁️</div>
+      Percepción emocional
+    </div>
+    <div class="dim-hint">Suma ítems 1–8 &nbsp;·&nbsp; Rango: 8 – 40</div>
+    <div class="score-row">
+      <input type="range" id="r1" min="8" max="40" value="24"
+        oninput="document.getElementById('v1').textContent=this.value">
+      <div class="sval" id="v1">24</div>
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-hd">
+      <div class="dim-ic" style="background:#ECFDF5">🧠</div>
+      Comprensión emocional
+    </div>
+    <div class="dim-hint">Suma ítems 9–16 &nbsp;·&nbsp; Rango: 8 – 40</div>
+    <div class="score-row">
+      <input type="range" id="r2" min="8" max="40" value="24"
+        oninput="document.getElementById('v2').textContent=this.value">
+      <div class="sval" id="v2">24</div>
+    </div>
+  </div>
+
+  <div class="dim">
+    <div class="dim-hd">
+      <div class="dim-ic" style="background:#FFF7ED">⚡</div>
+      Regulación emocional
+    </div>
+    <div class="dim-hint">Suma ítems 17–24 &nbsp;·&nbsp; Rango: 8 – 40</div>
+    <div class="score-row">
+      <input type="range" id="r3" min="8" max="40" value="24"
+        oninput="document.getElementById('v3').textContent=this.value">
+      <div class="sval" id="v3">24</div>
+    </div>
+  </div>
+
+  <button class="btn-go" onclick="calc()">⚽ ¡DESCUBRE TU TIPO DE HINCHA!</button>
+</div>
+
+<div class="rc" id="resCard">
+  <div class="rc-hdr" id="rcHdr">
+    <span class="rc-emoji" id="rcEmoji"></span>
+    <div class="rc-tag">TU PERFIL EMOCIONAL · MEET ME 2026</div>
+    <div class="rc-name" id="rcName"></div>
+  </div>
+  <div class="rc-body">
+    <div class="rc-desc" id="rcDesc"></div>
+    <div class="rc-pills" id="rcPills"></div>
+    <div class="rc-tip" id="rcTip"></div>
+  </div>
+  <button class="btn-back" onclick="back()">↩ Volver a calcular</button>
+</div>
+
+<div class="ftr">MEET ME 2026 · LA HINCHADA DE ECOTEC · Bienestar Universitario</div>
+
+<script>
+let G='H';
+function setG(g,b){
+  G=g;
+  document.querySelectorAll('.gbtn').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+}
+
+function cP(s){return G==='H'?(s<=21?'poca':s<=32?'adecuada':'demasiada'):(s<=24?'poca':s<=35?'adecuada':'demasiada')}
+function cC(s){return G==='H'?(s<=25?'mejorar':s<=35?'adecuada':'excelente'):(s<=23?'mejorar':s<=34?'adecuada':'excelente')}
+function cR(s){return G==='H'?(s<=23?'mejorar':s<=35?'adecuada':'excelente'):(s<=23?'mejorar':s<=34?'adecuada':'excelente')}
+
+const H={
+  volcan:{
+    emoji:'🌋',name:'El Hincha Volcán',
+    bg:'linear-gradient(135deg,#8B1A0E,#C0392B)',
+    desc:'Lo que pasa en el campo, pasa entero por tu cuerpo. Con el gol explotas de alegría, con el árbitro el estadio entero te escucha. Tu emoción es genuina y contagiosa... pero a veces el primer tiempo termina y tú ya llevas tres explosiones.',
+    tip:'<strong>Tu entrenamiento:</strong> Practica la respiración antes de reaccionar. Tu intensidad es un regalo — solo necesita el canal correcto para brillar.'
+  },
+  director:{
+    emoji:'🎯',name:'El Director Técnico de las Gradas',
+    bg:'linear-gradient(135deg,#001845,#003087)',
+    desc:'Ya tienes la pizarra en la cabeza. Entiendes el partido y entiendes exactamente lo que sientes, y cuando todo se complica te mantienes firme. Eres el capitán emocional de cualquier tribuna — y todos lo saben.',
+    tip:'<strong>Tu momento:</strong> Comparte esa claridad con los demás. Lideras mejor cuando también conectas con lo que sienten a tu alrededor.'
+  },
+  tempano:{
+    emoji:'🧊',name:'El Hincha Témpano',
+    bg:'linear-gradient(135deg,#1565C0,#29ABE2)',
+    desc:'Camiseta puesta, actitud de roca. Ni el gol más épico ni el penal más injusto te sacan de tu centro. Tu calma es tu superpoder... aunque tus compañeros de tribuna a veces no saben si el partido te importa o no.',
+    tip:'<strong>Tu reto:</strong> Está bien mostrar más de lo que sientes. La emoción compartida hace más grande la celebración — ¡inténtalo!'
+  },
+  alma:{
+    emoji:'⭐',name:'El Alma de la Barra',
+    bg:'linear-gradient(135deg,#0E5C31,#1A9A50)',
+    desc:'Eres el corazón de la hinchada. Sientes el partido, entiendes lo que te pasa, y cuando el equipo va perdiendo eres quien levanta el canto. Tu equilibrio emocional es el motor invisible del grupo.',
+    tip:'<strong>Tu talento:</strong> ¡Sigue así! Y recuerda acompañar a quienes todavía están encontrando su propio equilibrio emocional.'
+  },
+  confundido:{
+    emoji:'🌀',name:'El Hincha Confundido',
+    bg:'linear-gradient(135deg,#4A148C,#7B1FA2)',
+    desc:'Sientes muchísimo, pero no siempre sabes exactamente qué. Sales del estadio agotado sin poder explicar del todo por qué. A veces lloras, a veces ríes, y no siempre en el momento esperado. ¡Pero esa intensidad es completamente tuya!',
+    tip:'<strong>Tu práctica:</strong> El "¿qué estoy sintiendo ahora mismo?" puede ser un game-changer para ti. Empieza con pequeños momentos del día.'
+  },
+  pretemporada:{
+    emoji:'🏋️',name:'El Hincha en Pretemporada',
+    bg:'linear-gradient(135deg,#BF5A00,#E67E22)',
+    desc:'Tienes la pasión, tienes el potencial. Solo necesitas más entrenamiento emocional. Como un jugador que llega al torneo con margen de mejora — el Mundial 2026 es exactamente tu oportunidad de brillar con todo.',
+    tip:'<strong>Tu ventaja:</strong> El simple hecho de conocerte a través de este ejercicio ya es un primer paso. ¡Sigue en esa dirección — el equipo te espera!'
+  }
+};
+
+function getH(P,C,R){
+  if(P==='demasiada'&&R==='mejorar')return'volcan';
+  if(P==='poca'&&R!=='mejorar')return'tempano';
+  if(P==='demasiada'&&C==='mejorar')return'confundido';
+  if(C==='excelente'&&R==='excelente')return'director';
+  if(R==='excelente'&&P==='adecuada')return'alma';
+  if(C==='mejorar'||R==='mejorar'||P==='poca')return'pretemporada';
+  return'alma';
+}
+
+function lbl(c){
+  return{poca:'😶 Poca',adecuada:'✅ Adecuada',demasiada:'🔥 Excesiva',mejorar:'📈 A mejorar',excelente:'⭐ Excelente'}[c]||c;
+}
+function clr(c){
+  return{poca:'#E67E22',adecuada:'#1A7A4A',demasiada:'#C0392B',mejorar:'#C0392B',excelente:'#0057A8'}[c]||'#888';
+}
+
+function calc(){
+  const s1=+document.getElementById('r1').value;
+  const s2=+document.getElementById('r2').value;
+  const s3=+document.getElementById('r3').value;
+  const P=cP(s1),C=cC(s2),R=cR(s3);
+  const t=getH(P,C,R),h=H[t];
+  document.getElementById('rcHdr').style.background=h.bg;
+  document.getElementById('rcEmoji').textContent=h.emoji;
+  document.getElementById('rcName').textContent=h.name;
+  document.getElementById('rcDesc').textContent=h.desc;
+  document.getElementById('rcTip').innerHTML=h.tip;
+  document.getElementById('rcPills').innerHTML=
+    pill('Percepción',s1,P)+pill('Comprensión',s2,C)+pill('Regulación',s3,R);
+  document.getElementById('formCard').style.display='none';
+  const rc=document.getElementById('resCard');
+  rc.style.display='block';
+  rc.scrollIntoView({behavior:'smooth'});
+}
+
+function pill(name,score,cat){
+  return`<div class="pill"><div class="pl">${name}</div><div class="pv">${score}</div><div class="pc" style="color:${clr(cat)}">${lbl(cat)}</div></div>`;
+}
+
+function back(){
+  document.getElementById('formCard').style.display='block';
+  document.getElementById('resCard').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
